@@ -9,7 +9,7 @@
  }
 
 #sidebar-wrapper {
-  min-height: 100vh;
+  /*min-height: 50vh;*/
   margin-left: -15rem;
   -webkit-transition: margin .25s ease-out;
   -moz-transition: margin .25s ease-out;
@@ -20,6 +20,7 @@
 #sidebar-wrapper .sidebar-heading {
   padding: 0.875rem 1.25rem;
   font-size: 1.2rem;
+  display: block;
 }
 
 #sidebar-wrapper .list-group {

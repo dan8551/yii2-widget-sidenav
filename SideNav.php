@@ -47,11 +47,16 @@ class SideNav extends \yii\widgets\Menu
 {
     public $heading;
     
-    public $headingOptions = [];
+    public $headingOptions = ['class' => 'rounded-corners'];
     
     public $containerOptions = ['class' => 'border-right', 'id' => 'sidebar-wrapper'];
     
+    public $bodyOptions = ['class' => 'list-group-flush rounded-corners'];
+    
     public $itemOptions = ['class' => 'list-group-item list-group-item-action '];
+    
+    public $expanding = false;
+    public $expandingOptions = [];
     
     /**
      * @var string the template used to render the body of a menu which is a link.
@@ -86,10 +91,19 @@ class SideNav extends \yii\widgets\Menu
     {
         $heading = '';
         if (isset($this->heading) && $this->heading != '') {
-            $this->headingOptions['class'] = (array_key_exists('class', $this->headingOptions)) ? $this->headingOptions['class'] . 'sidebar-heading' : 'sidebar-heading';
-            $heading = Html::tag('div', $this->heading, $this->headingOptions);
+            $this->headingOptions['class'] = (array_key_exists('class', $this->headingOptions)) ? $this->headingOptions['class'] . ' sidebar-heading' : 'sidebar-heading';
+            if($this->expanding)
+            {
+                $this->headingOptions['data-toggle'] = 'collapse';
+                $this->headingOptions['href'] = '#'.$this->expandingOptions['name'];
+                $this->bodyOptions['class'] .= ' collapse';
+                $this->bodyOptions['id'] = $this->expandingOptions['name'];
+                $heading = Html::tag('a', $this->heading, $this->headingOptions);
+            }
+            else
+                $heading = Html::tag('div', $this->heading, $this->headingOptions);
         }
-        $body = Html::tag('div', $this->renderMenu(), ['class' => ' list-group-flush']);
+        $body = Html::tag('div', $this->renderMenu(), $this->bodyOptions);
         echo Html::tag('div', $heading . $body, $this->containerOptions);
     }
     
